@@ -1,10 +1,5 @@
-#import POCOpif
-import POCOstub
+import POCOLib
+from robotremoteserver import RobotRemoteServer
 
 
-def get_LED_state(index):
-    ledlist = POCOstub.get_LED_data()
-    return ledlist[index]
-
-
-print get_LED_state(1)
+RobotRemoteServer(POCOLib())

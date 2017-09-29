@@ -57,7 +57,7 @@ def update_repl(screen):
         data = POCOpif.get_LED_data(handle)
         last_position = print_rgb_led_data(screen, data, 0, 96)
         last_position = print_rgb_led_data(screen, data, 112, 87, 32, last_position[0], last_position[1])
-        print_linear_data(screen, data, 224,112 , last_position[0], last_position[1])
+        print_linear_data(screen, data, 224, 112, last_position[0], last_position[1])
         screen.refresh()
         sleep(0.5)
     POCOpif.deinit_pif(handle)
