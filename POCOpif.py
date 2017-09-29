@@ -134,7 +134,7 @@ def read_LEDs_A(handle, screen):
 def get_LED_data(handle):
     sendCommand(handle)
     LEDList = []
-    for I in range(1, 336):
+    for I in range(0, 336):
         lednums = readLED(handle)
         t_off = lednums[0]
         t_on = lednums[1]
@@ -142,7 +142,7 @@ def get_LED_data(handle):
         ratio = 0.0
         if total != 0:
             ratio = t_on / total
-        LEDList.append(ratio)
+        LEDList.append(ratio * 100.0)
     return LEDList
 
 # ------------------------------------------------------------------------------
@@ -200,13 +200,11 @@ def initialize_pif():
 
         strBuf = ctypes.create_string_buffer(1000)
         pifglobs.pif.pifVersion(strBuf, ctypes.sizeof(strBuf))
-        print('Using pif library version: %s\n' % repr(strBuf.value))
 
         handle = ctypes.c_int(pifglobs.pif.pifInit())
         dev = showDeviceID(handle)
 
         if dev != pifglobs.UNRECOGNIZED:
-            print('pif detected')
             pifglobs.handle = handle
             return handle
     except:
@@ -218,42 +216,3 @@ def deinit_pif(handle):
     if handle:
         pifglobs.pif.pifClose(handle)
 
-
-def main():
-    handle = None
-    try:
-        pifglobs.pif = ctypes.CDLL("libpif.so")
-
-        strBuf = create_string_buffer(1000)
-        rv = pifglobs.pif.pifVersion(strBuf, sizeof(strBuf))
-        print('Using pif library version: %s\n' % repr(strBuf.value))
-
-        handle = ctypes.c_int(pifglobs.pif.pifInit())
-        dev = showDeviceID(handle)
-
-        if dev != pifglobs.UNRECOGNIZED:
-            print('pif detected')
-            pifglobs.handle = handle
-
-#      test_reads(handle)
-#      write_scope(handle)
-#      Screen.wrapper(captureHandle(handle))
-        for I in range(1, 100):
-            ledlist = get_LED_data(handle)
-            print('\n'.join('{}: {}'.format(*k) for k in enumerate(ledlist)))
-            sleep(0.5)
-    except AttributeError as attrerr:
-        print("AttributeError {0}".format(attrerr))
-    except TypeError as ter:
-        print("TypeError {0}".format(ter))
-    except NameError as err:
-        print("NameError {0}".format(err))
-    except:
-        print("Exception caught ", sys.exc_info()[0])
-
-    if handle:
-        pifglobs.pif.pifClose(handle)
-
-
-if __name__ == '__main__':
-    main()
