@@ -193,6 +193,32 @@ def captureHandle(handle):
     return lambda s: read_LEDs_A(handle, s)
 
 
+def initialize_pif():
+    handle = None
+    try:
+        pifglobs.pif = ctypes.CDLL("libpif.so")
+
+        strBuf = ctypes.create_string_buffer(1000)
+        pifglobs.pif.pifVersion(strBuf, ctypes.sizeof(strBuf))
+        print('Using pif library version: %s\n' % repr(strBuf.value))
+
+        handle = ctypes.c_int(pifglobs.pif.pifInit())
+        dev = showDeviceID(handle)
+
+        if dev != pifglobs.UNRECOGNIZED:
+            print('pif detected')
+            pifglobs.handle = handle
+            return handle
+    except:
+        pass
+    raise RuntimeError("no handle obtained")
+
+
+def deinit_pif(handle):
+    if handle:
+        pifglobs.pif.pifClose(handle)
+
+
 def main():
     handle = None
     try:
