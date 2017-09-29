@@ -3,6 +3,8 @@ import POCOpif
 
 class POCOLib:
 
+    ROBOT_LIBRARY_SCOPE = 'TEST SUITE'
+
     def __init__(self):
         self.__POCOHANDLE__ = POCOpif.initialize_pif()
 
