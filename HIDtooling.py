@@ -65,7 +65,10 @@ def match_RGB_with_error(act_rgb, exp_r, exp_g, exp_b, error):
     exp_rgb = (exp_r, exp_g, exp_b)
     if not match_with_margin(act_rgb[0], exp_rgb[0], error):
         logger.error("R mismatch {0} != {1}".format(act_rgb[0], exp_rgb[0]))
+        return False
     if not match_with_margin(act_rgb[1], exp_rgb[1], error):
-        logger.error("G mismatch")
+        logger.error("G mismatch {0} != {1}".format(act_rgb[1], exp_rgb[1]))
+        return False
     if not match_with_margin(act_rgb[2], exp_rgb[2], error):
-        logger.error("B mismatch")
+        logger.error("B mismatch {0} != {1}".format(act_rgb[2], exp_rgb[2]))
+        return False
