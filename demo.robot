@@ -6,14 +6,13 @@ Library   Collections
 
 *** Test Cases ***
 
-Demo LED
-    Enumerate LED States
+#Demo LED
+#    Enumerate LED States
 
 Check Color LEDS
-    Check LED    ${0}     ${12}    ${12}    ${0}
-    Check LED    ${10}    ${22}    ${12}    ${0}
-    Check LED    ${15}    ${12}    ${92}    ${0}
-    Check LED    ${25}    ${12}    ${12}    ${64}
+    Set HID Mode
+    : FOR           ${index}    IN RANGE   ${60}
+    \  Check LED    ${index}     ${100}    ${100}    ${100}
 
 
 *** Keywords ***
@@ -27,6 +26,6 @@ Enumerate LED States
 Check LED
     [Arguments]           ${key_index}    ${r}   ${g}   ${b}
     Set Key RGB Percent   ${key_index}    ${r}   ${g}   ${b}    ${61}
-    Sleep    10 ms
-    ${act_grb}=             POCOBox.get_Keybed_RGB_LED    ${key_index}
-    Match RGB With Error    ${act_rgb}
+    Sleep    5 ms
+    ${act_rgb}=             POCOBox.get_Keybed_RGB_LED    ${key_index}
+    Match RGB With Error    ${act_rgb}    ${r}   ${g}   ${b}   ${0.5}

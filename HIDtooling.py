@@ -11,7 +11,7 @@ def _run_HID_tool(args):
     subprocess.call(cmd + args, stdout=FNULL, stderr=subprocess.STDOUT)
 
 
-def _set_HID_mode():
+def set_HID_mode():
     _run_HID_tool(["-w", "0xA0", "0x00", "0x00"])
 
 
@@ -39,13 +39,18 @@ def fill_RGB_color(color, count):
 
 
 def set_single_Key_RGB(key, r, g, b, totalcount):
+    logger.debug("setting {0} to ({1} {2} {3})".format(key, r, g, b))
     cols = fill_RGB_color((0, 0, 0), totalcount)
     cols[key] = (r, g, b)
     set_RGB_colors(cols)
 
 
+def _int_cvt(x):
+    return int((x/100.0) * 255.0)
+
+
 def set_key_RGB_percent(key, r, g, b, totalcount):
-    set_single_Key_RGB(key, (r/100)*255, (g/100)*255, (b/100)*255, totalcount)
+    set_single_Key_RGB(key, _int_cvt(r), _int_cvt(g), _int_cvt(b), totalcount)
 
 
 def _sqr(x):
@@ -56,14 +61,11 @@ def match_with_margin(a, b, error):
     return _sqr(a - b) < _sqr(error)
 
 
-def match_RGB_with_error(act_rgb, exp_rgb, error):
+def match_RGB_with_error(act_rgb, exp_r, exp_g, exp_b, error):
+    exp_rgb = (exp_r, exp_g, exp_b)
     if not match_with_margin(act_rgb[0], exp_rgb[0], error):
-        logger.error("R mismatch")
-        raise
+        logger.error("R mismatch {0} != {1}".format(act_rgb[0], exp_rgb[0]))
     if not match_with_margin(act_rgb[1], exp_rgb[1], error):
         logger.error("G mismatch")
-        raise
     if not match_with_margin(act_rgb[2], exp_rgb[2], error):
         logger.error("B mismatch")
-        raise
-    pass
