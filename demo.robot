@@ -15,6 +15,7 @@ Check Color LEDS
     Check LED    ${15}    ${12}    ${92}    ${0}
     Check LED    ${25}    ${12}    ${12}    ${64}
 
+
 *** Keywords ***
 
 Enumerate LED States
@@ -22,9 +23,10 @@ Enumerate LED States
     \   ${rgbstate}=      POCOBox.get_Keybed_RGB_LED    ${index}
     \   Log To Console    ${rgbstate}
 
+
 Check LED
-    [Arguments]    ${key_index}    ${r}    ${g}    ${b}
-    set_single_Key_RGB   ${key_index}   ${r}    ${g}    ${b}    ${61}
+    [Arguments]           ${key_index}    ${r}   ${g}   ${b}
+    Set Key RGB Percent   ${key_index}    ${r}   ${g}   ${b}    ${61}
     Sleep    10 ms
-    ${act_rgb}=      POCOBox.get_Keybed_RGB_LED    ${key_index}
-    Log To Console   ${act_rgb}
+    ${act_grb}=             POCOBox.get_Keybed_RGB_LED    ${key_index}
+    Match RGB With Error    ${act_rgb}

@@ -1,6 +1,7 @@
 import subprocess
 from time import sleep
 from os import devnull
+from robot.api import logger
 
 
 def _run_HID_tool(args):
@@ -41,3 +42,28 @@ def set_single_Key_RGB(key, r, g, b, totalcount):
     cols = fill_RGB_color((0, 0, 0), totalcount)
     cols[key] = (r, g, b)
     set_RGB_colors(cols)
+
+
+def set_key_RGB_percent(key, r, g, b, totalcount):
+    set_single_Key_RGB(key, (r/100)*255, (g/100)*255, (b/100)*255, totalcount)
+
+
+def _sqr(x):
+    return x * x
+
+
+def match_with_margin(a, b, error):
+    return _sqr(a - b) < _sqr(error)
+
+
+def match_RGB_with_error(act_rgb, exp_rgb, error):
+    if not match_with_margin(act_rgb[0], exp_rgb[0], error):
+        logger.error("R mismatch")
+        raise
+    if not match_with_margin(act_rgb[1], exp_rgb[1], error):
+        logger.error("G mismatch")
+        raise
+    if not match_with_margin(act_rgb[2], exp_rgb[2], error):
+        logger.error("B mismatch")
+        raise
+    pass
