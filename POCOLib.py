@@ -23,4 +23,4 @@ class POCOLib(object):
             return
             data[3*index - 112 + 1],
             data[3*index - 112],
-            data[3*index + 2 - 112]
+            data[3*index - 112 + 2]
