@@ -20,7 +20,4 @@ class POCOLib(object):
         if index >= 0 and index < 32:
             return data[3*index + 1], data[3*index], data[3*index + 2]
         else:
-            return
-            data[3*(index-32) + 112 + 1],
-            data[3*(index-32) + 112],
-            data[3*(index-32) + 112 + 2]
+            return (data[3*(index-32) + 112 + 1], data[3*(index-32) + 112], data[3*(index-32) + 112 + 2])
