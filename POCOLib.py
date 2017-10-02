@@ -17,7 +17,7 @@ class POCOLib(object):
 
     def get_Keybed_RGB_LED(self, index):
         data = POCOpif.get_LED_data(self.__POCOHANDLE__)
-        if index > 0 and index < 32:
+        if index >= 0 and index < 32:
             return data[index], data[index + 1], data[index + 2]
         else:
             index += 112
