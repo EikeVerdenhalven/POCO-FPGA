@@ -13,6 +13,10 @@ class POCOLib(object):
             POCOpif.deinit_pif(self.__POCOHANDLE__)
             self.__POCOHANDLE__ = None
 
+    def get_keybed_LEDs(self):
+        rawdata = POCOpif.get_LED_data(self.__POCOHANDLE__)
+        return rawdata[0:32] + rawdata[112:112 + 29]
+
     def get_Keybed_RGB_LED(self, index):
         data = POCOpif.get_LED_data(self.__POCOHANDLE__)
         if index > 0 and index < 32:

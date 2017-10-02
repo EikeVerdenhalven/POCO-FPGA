@@ -10,6 +10,7 @@ Demo RGB LED
 *** Keywords ***
 
 Enumerate LED States
+    ${rgbstates}=         POCOBox.get_keybed_LEDs
     : FOR  ${index}       IN RANGE    ${59}
     \   ${rgbstate}=      POCOBox.get_Keybed_RGB_LED    ${index}
     \   Log To Console    ${rgbstate}
