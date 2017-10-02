@@ -37,10 +37,7 @@ def fill_RGB_color(color, count):
     return [color for i in range(0, count)]
 
 
-def set_single_Key_RGB(key, color, totalcount):
+def set_single_Key_RGB(key, r, g, b, totalcount):
     cols = fill_RGB_color((0, 0, 0), totalcount)
-    cols[key] = color
+    cols[key] = (r, g, b)
     set_RGB_colors(cols)
-
-for i in range(0,61):
-    set_single_Key_RGB(i, (255,0,0), 61)
